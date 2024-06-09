@@ -155,17 +155,12 @@ function displaySignUpButton() {
 // Theme toggle logic
 const checkbox = document.getElementById("checkbox");
 const body = document.body;
-const currTheme = localStorage.getItem('theme');
+const currTheme = localStorage.getItem('theme') || 'light';
+body.setAttribute('data-theme', currTheme);
+checkbox.checked = currTheme === 'dark';
 
-if (currTheme) {
-    body.setAttribute('data-theme', currTheme);
-    if (currTheme === 'dark') {
-        checkbox.checked = true;
-    }
-}
-
-checkbox.addEventListener('change', function() {
-    let newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+checkbox.addEventListener("change", () => {
+    const newTheme = checkbox.checked ? 'dark' : 'light';
     localStorage.setItem('theme', newTheme);
     body.setAttribute('data-theme', newTheme);
 });
