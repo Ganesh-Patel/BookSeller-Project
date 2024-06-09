@@ -4,6 +4,8 @@
     --text-color:black;
     --btn-color1:#4F2EE8;
     --main-bg:#F6F6F6;
+    --cat-text-color:#EAC645;
+    --text-color-gray:#B4AFAF;
   
 
 }
@@ -13,6 +15,8 @@
     --text-color:white;
     --btn-color1:#4F2EE8;
     --main-bg:#202024;
+    --cat-text-color: #4F2EE8;
+    --text-color-gray:#5a5757;
   
 }
 *{
@@ -295,10 +299,12 @@ input[type="password"] {
 .sidebar-menu {
     margin-bottom: 20px;
 }
-
+.all-cat-heading{
+ color:var(--cat-text-color) ;
+}
 .menu-list {
     list-style: none;
-    padding: 5rem;
+    padding: 0rem 2rem;
     margin: 0;
     overflow-y: auto; /* Allow menu list to scroll */
     max-height: 50vh; /* Set max height for menu list */
@@ -306,8 +312,14 @@ input[type="password"] {
 
 .menu-list li {
     padding: 1rem 0rem;
+    color: var(--text-color-gray);
+    transition: transform 0.3s, color 0.3s;
 }
-
+.menu-list li:hover {
+    transform: scale(1.1);
+    text-transform: uppercase;
+    color: #EAC645;
+}
 .support-container {
     height: 45vh; 
     width: 100%;
@@ -325,12 +337,13 @@ input[type="password"] {
 
 .main-content {
     flex: 1; 
-    padding: 50px 120px;
+    padding: 5rem 12rem;
 }
 /*<!- main css starts here ->*/
 .main-title{
     font-size: 52px;
     font-weight: 900;
+    margin-bottom: 2rem;
     /* text-align: center; */
 }
 .books{
@@ -339,7 +352,68 @@ input[type="password"] {
 .bestSeller{
     color: var(--text-color);
 }
+:root {
+    --btn-color1: #ff6f61;
+    --text-color: #333;
+}
 
+.main-title {
+    font-size: 52px;
+    font-weight: 900;
+}
+
+.books {
+    color: var(--btn-color1);
+}
+
+.bestSeller {
+    color: var(--text-color);
+}
+
+.category-section {
+    margin-bottom: 40px;
+}
+
+.category-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.books-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.book-card {
+    width: 150px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.book-card img {
+    max-width: 100%;
+    height: auto;
+}
+
+.show-more-btn ,.back-button{
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: var(--btn-color1);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.back-button {
+    display: none;
+    margin-top: 0;
+    margin-bottom: 20px;
+}
 
 .footer {
     padding: 29px 0;

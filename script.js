@@ -29,6 +29,8 @@ function checkLoginStatus() {
 // Initial check for login status when the page loads
 document.addEventListener('DOMContentLoaded', function() {
     checkLoginStatus();
+    fetchCategories();
+    fetchBooks();
 });
 
 openModalBtn.addEventListener('click', function() {
@@ -163,4 +165,128 @@ checkbox.addEventListener("change", () => {
     const newTheme = checkbox.checked ? 'dark' : 'light';
     localStorage.setItem('theme', newTheme);
     body.setAttribute('data-theme', newTheme);
+});
+
+const cat_list=document.getElementById("menu-list");
+const apiUrl = 'https://books-backend.p.goit.global/books/category-list';
+
+async function fetchCategories() {
+    try {
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+        data.forEach(category => {
+            const listItem = document.createElement('li');
+            listItem.textContent = category.list_name;
+            cat_list.appendChild(listItem);
+        });
+    } catch (error) {
+        console.error('Error fetching categories:', error);
+    }
+}
+// here starts
+const booksApiUrl = 'https://books-backend.p.goit.global/books/top-books';
+const booksContainerElement = document.getElementById('books-container');
+const mainTitleElement = document.querySelector('.main-title');
+const bestSellerSpan = mainTitleElement.querySelector('.bestSeller');
+const booksSpan = mainTitleElement.querySelector('.books');
+const backButton = document.getElementById('back-button');
+
+async function fetchBooks() {
+    try {
+        const response = await fetch(booksApiUrl);
+        const data = await response.json();
+        data.forEach(category => {
+            const categorySection = document.createElement('div');
+            categorySection.classList.add('category-section');
+
+            const categoryTitle = document.createElement('h3');
+            categoryTitle.classList.add('category-title');
+            categoryTitle.textContent = category.list_name;
+            categorySection.appendChild(categoryTitle);
+
+            const booksList = document.createElement('div');
+            booksList.classList.add('books-list');
+
+            category.books.slice(0, 3).forEach(book => {
+                const bookCard = createBookCard(book);
+                booksList.appendChild(bookCard);
+            });
+
+            categorySection.appendChild(booksList);
+
+            const showMoreBtn = document.createElement('button');
+            showMoreBtn.classList.add('show-more-btn');
+            showMoreBtn.textContent = 'Show More';
+            showMoreBtn.addEventListener('click', async () => {
+                await showMoreBooks(category.list_name, categorySection, booksList);
+                updateMainTitle(category.list_name);
+                backButton.style.display = 'block';
+            });
+            categorySection.appendChild(showMoreBtn);
+
+            booksContainerElement.appendChild(categorySection);
+        });
+    } catch (error) {
+        console.error('Error fetching books:', error);
+    }
+}
+
+function createBookCard(book) {
+    const bookCard = document.createElement('div');
+    bookCard.classList.add('book-card');
+
+    const bookImage = document.createElement('img');
+    bookImage.src = book.book_image;
+    bookCard.appendChild(bookImage);
+
+    const bookTitle = document.createElement('p');
+    bookTitle.textContent = book.title;
+    bookCard.appendChild(bookTitle);
+
+    const bookAuthor = document.createElement('p');
+    bookAuthor.textContent = book.author;
+    bookCard.appendChild(bookAuthor);
+
+    return bookCard;
+}
+
+async function showMoreBooks(category, categorySection, booksList) {
+    const categoryApiUrl = `https://books-backend.p.goit.global/books/category?category=${encodeURIComponent(category)}`;
+    try {
+        const response = await fetch(categoryApiUrl);
+        const data = await response.json();
+        booksList.innerHTML = '';
+        data.forEach(book => {
+            const bookCard = createBookCard(book);
+            booksList.appendChild(bookCard);
+        });
+        hideOtherCategories(categorySection);
+    } catch (error) {
+        console.error('Error fetching more books:', error);
+    }
+}
+
+function hideOtherCategories(selectedCategorySection) {
+    const categorySections = document.querySelectorAll('.category-section');
+    categorySections.forEach(section => {
+        if (section !== selectedCategorySection) {
+            section.style.display = 'none';
+        }
+    });
+}
+
+function updateMainTitle(categoryName) {
+    const words = categoryName.split(' ');
+    const lastWord = words.pop();
+    const remainingWords = words.join(' ');
+    bestSellerSpan.textContent = remainingWords;
+    booksSpan.textContent = lastWord;
+}
+
+backButton.addEventListener('click', () => {
+    booksContainerElement.innerHTML = '';
+    fetchBooks();
+    bestSellerSpan.textContent = 'Best Sellers';
+    booksSpan.textContent = 'Books';
+    backButton.style.display = 'none';
 });
