@@ -31,6 +31,98 @@ document.addEventListener('DOMContentLoaded', function() {
     checkLoginStatus();
     fetchCategories();
     fetchBooks();
+    const modal = document.getElementById('bookModal');
+    const closeBtn = document.querySelector('.book-close-btn');
+    const modalBookImage = document.getElementById('modalBookImage');
+    const modalBookTitle = document.getElementById('modalBookTitle');
+    const modalBookAuthor = document.getElementById('modalBookAuthor');
+    const modalBookDescription = document.getElementById('modalBookDescription');
+    const buyLinksContainer = document.getElementById('buyLinks');
+    const modalActionButton = document.getElementById('modalActionButton');
+
+    closeBtn.onclick = function() {
+        modal.style.display = 'none';
+    };
+
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = 'none';
+        }
+    };
+
+    document.addEventListener('click', function(event) {
+        if (event.target.classList.contains('quick-review-btn')) {
+            const bookId = event.target.dataset.bookId;
+            if (bookId) {
+                fetchBookDetails(bookId);
+            } else {
+                console.error('Book ID is not defined');
+            }
+        }
+    });
+
+    function fetchBookDetails(bookId) {
+        fetch(`https://books-backend.p.goit.global/books/${bookId}`)
+            .then(response => response.json())
+            .then(book => {
+                showModal(book);
+            })
+            .catch(error => console.error('Error fetching book details:', error));
+    }
+
+    function showModal(book) {
+        modalBookImage.src = book.book_image;
+        modalBookTitle.textContent = book.title;
+        modalBookAuthor.textContent = `by ${book.author}`;
+        modalBookDescription.textContent = book.description || 'No description available.';
+
+        // Clear previous buy links
+        buyLinksContainer.innerHTML = '';
+        
+        // Use predefined images for buy links
+        const predefinedLinks = [
+            { name: 'Amazon', imgSrc: 'https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-1x.d33dc585.png', imgSrcSet: 'https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-1x.d33dc585.png 1x, https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-2x.01f59d3f.png 2x', alt: 'amazon' },
+            { name: 'Apple Books', imgSrc: 'https://yevhenii2022.github.io/team-proj-js-book-app/apple-shop-1x.aeb5cfd2.png', imgSrcSet: 'https://yevhenii2022.github.io/team-proj-js-book-app/apple-shop-1x.aeb5cfd2.png 1x, https://yevhenii2022.github.io/team-proj-js-book-app/apple-shop-2x.df06fe16.png 2x', alt: 'apple-books' },
+            { name: 'Bookshop', imgSrc: 'https://yevhenii2022.github.io/team-proj-js-book-app/bookshop-1x.d3877644.png', imgSrcSet: 'https://yevhenii2022.github.io/team-proj-js-book-app/bookshop-1x.d3877644.png 1x, https://yevhenii2022.github.io/team-proj-js-book-app/bookshop-2x.bc4a3396.png 2x', alt: 'bookshop' }
+        ];
+
+        book.buy_links.forEach(link => {
+            const predefinedLink = predefinedLinks.find(predefined => predefined.name === link.name);
+            if (predefinedLink) {
+                const anchor = document.createElement('a');
+                anchor.href = link.url;
+                anchor.target = '_blank';
+                anchor.innerHTML = `<img srcset="${predefinedLink.imgSrcSet}" src="${predefinedLink.imgSrc}" alt="${predefinedLink.alt}">`;
+                buyLinksContainer.appendChild(anchor);
+            }
+        });
+
+        // Update the action button
+        if (isBookInCart(book._id)) {
+            modalActionButton.textContent = 'Remove from Shopping Cart';
+            modalActionButton.onclick = () => removeFromCart(book._id);
+        } else {
+            modalActionButton.textContent = 'Add to Shopping Cart';
+            modalActionButton.onclick = () => addToCart(book._id);
+        }
+
+        modal.style.display = 'block';
+    }
+
+    function isBookInCart(bookId) {
+        return false;
+    }
+
+    function addToCart(bookId) {
+        console.log(`Adding book ${bookId} to cart`);
+        modal.style.display = 'none';
+    }
+
+    function removeFromCart(bookId) {
+        console.log(`Removing book ${bookId} from cart`);
+        modal.style.display = 'none';
+    }
+
 });
 
 openModalBtn.addEventListener('click', function() {
@@ -235,20 +327,34 @@ function createBookCard(book) {
     const bookCard = document.createElement('div');
     bookCard.classList.add('book-card');
 
+    const imageContainer = document.createElement('div');
+    imageContainer.classList.add('image-container');
+
     const bookImage = document.createElement('img');
     bookImage.src = book.book_image;
-    bookCard.appendChild(bookImage);
+    imageContainer.appendChild(bookImage);
 
-    const bookTitle = document.createElement('p');
+    const quickReviewBtn = document.createElement('button');
+    quickReviewBtn.classList.add('quick-review-btn');
+    quickReviewBtn.textContent = 'Quick View';
+    quickReviewBtn.dataset.bookId = book._id;
+    imageContainer.appendChild(quickReviewBtn);
+
+    bookCard.appendChild(imageContainer);
+
+    const bookTitle = document.createElement('h4');
+    bookTitle.classList.add('book-name');
     bookTitle.textContent = book.title;
     bookCard.appendChild(bookTitle);
 
     const bookAuthor = document.createElement('p');
+    bookAuthor.classList.add('book-author');
     bookAuthor.textContent = book.author;
     bookCard.appendChild(bookAuthor);
 
     return bookCard;
 }
+
 
 async function showMoreBooks(category, categorySection, booksList) {
     const categoryApiUrl = `https://books-backend.p.goit.global/books/category?category=${encodeURIComponent(category)}`;

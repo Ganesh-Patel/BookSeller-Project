@@ -387,18 +387,54 @@ input[type="password"] {
 }
 
 .book-card {
-    width: 150px;
+    position: relative;
+    width: 250px;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
     text-align: center;
+    overflow: hidden;
 }
 
 .book-card img {
-    max-width: 100%;
-    height: auto;
+    width: 100%;
+    height: 70%;
+}
+.book-name{
+    padding: 5px;
+    margin: 8px 0px;
+ 
+}
+.book-author{
+    color: var(--text-color-gray);
+    padding: 5px;
+    font-style: italic;
+}
+.image-container {
+    position: relative;
+    width: 100%;
+}
+.quick-review-btn {
+    position: absolute;
+    bottom: -40px;
+    left: 0;
+    width: 100%;
+    height: 20%;
+    padding: 10px;
+    background-color: #EAC645;
+    color: black;
+    border: none;
+    cursor: pointer;
+    transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+    opacity: 0;
+    visibility: hidden;
 }
 
+.image-container:hover .quick-review-btn {
+    bottom: 0;
+    opacity: 1;
+    visibility: visible;
+}
 .show-more-btn ,.back-button{
     display: inline-block;
     margin-top: 20px;
@@ -413,6 +449,92 @@ input[type="password"] {
     display: none;
     margin-top: 0;
     margin-bottom: 20px;
+}
+/* Book Modal styles */
+.book-modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.book-modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+}
+
+.book-close-btn {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+}
+
+.book-close-btn:hover,
+.book-close-btn:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.book-modal img {
+    width: 100px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.book-modal h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.book-modal p {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+#buyLinks {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: 20px 0;
+}
+
+#buyLinks a {
+    margin: 0 5px;
+}
+
+#buyLinks img {
+    width: 32px;  /* Adjust the size as needed */
+    height: auto;
+}
+
+#modalActionButton {
+    background-color: yellow;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin-top: 20px;
+}
+
+#modalActionButton:hover {
+    background-color: gold;
 }
 
 .footer {
