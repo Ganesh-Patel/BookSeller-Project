@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book App</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="./styles.css">
+    <link rel="icon" href="https://yevhenii2022.github.io/team-proj-js-book-app/apple-touch-icon.80f5f654.png" type="image/png">
+</head>
+
+<body>
+    <div class="body-wrapper">
+        <header class="header">
+            <nav class="left-nav">
+                <a href="#" rel="nofollow noopener noreferrer" class="logo">
+                    <img class="logo-svg" width="35" height="35" src="https://yevhenii2022.github.io/team-proj-js-book-app/apple-touch-icon.80f5f654.png">
+                    <h2>Book</h2>
+                </a>
+                <ul class="navigation__list" id="navigation__list">
+                    <li class="navigation__item">
+                        <a href="#" rel="nofollow noopener noreferrer" class="navigation__link home-nevigation">
+                            <div class="home-container">
+                                <span>Home</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="navigation__item">
+                        <a href="#" rel="nofollow noopener noreferrer" class="navigation__link navigation__link--with-icon">
+                            <span>Shopping list</span>
+                            <i class="fa-solid fa-bag-shopping shop-bag"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <div class="right-nav">
+                <div class="content">
+                    <input type="checkbox" class="checkbox" id="checkbox">
+                    <label for="checkbox" class="checkbox-label">
+                        <span class="ball"></span>
+                        <i class="fas fa-sun"></i>
+                        <i class="fas fa-moon"></i>
+                    </label>
+                </div>
+
+                <div class="auth-container">
+                    <button id="sign-up-btn" class="sign-up-btn" type="button" aria-label="Sign up">
+                        <span class="sign-up-btn__text">Sign up</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                   
+                </div>
+            </div>
+        </header>
+        <main>
+            <button id="log-out-btn" class="log-out-btn" type="button" aria-label="Log out" style="display: none; margin-top: 10px;">
+                <span class="sign-up-btn__text">Log out</span>
+                <i class="fa-solid fa-arrow-right"></i>
+            </button>
+            <div id="authModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close-btn">&times;</span>
+                    <div id="signup-form">
+                        <h2>Sign Up</h2>
+                        <input type="text" id="signup-username" placeholder="Username" required>
+                        <input type="email" id="signup-email" placeholder="Email" required>
+                        <input type="password" id="signup-password" placeholder="Password" required>
+                        <button id="signup-btn">Sign Up</button>
+                    </div>
+                    <div id="login-form" style="display: none;">
+                        <h2>Log In</h2>
+                        <input type="email" id="login-email" placeholder="Email" required>
+                        <input type="password" id="login-password" placeholder="Password" required>
+                        <button id="login-btn">Log In</button>
+                    </div>
+                    <div class="modal-footer">
+                        <span id="switch-to-login">Already have an account? Log In</span>
+                        <span id="switch-to-signup" style="display: none;">Don't have an account? Sign Up</span>
+                    </div>
+                </div>
+                <div id="notification" class="notification"></div>
+            </div>
+            <div class="main-section">
+                <div class="left-sidebar">
+                    <div class="sidebar-menu">
+                        <ul class="menu-list">
+                            <!-- Your menu items go here -->
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <li>Menu Item 1</li>
+                            <li>Menu Item 2</li>
+                            <!-- More menu items -->
+                        </ul>
+                    </div>
+                    <div class="support-container">
+                        <!-- Support content goes here -->
+                        <div class="support-content">
+                            <h2>Support Container</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <!-- Additional support content -->
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content of the page -->
+                <div class="main-content">
+                    <p class="main-title"><span class="bestSeller">Best Sellers</span> <span class="books">Books</span></p>
+                </div>
+            </div>
+            
+        </main>
+        <footer class="footer">
+            <div class="container">
+                <div class="footer__wrapper">
+                    <p class="footer__text footer__text--left">&#169;2023 | All Rights Reserved | </p>
+                    <p class="footer__text footer__text--rigth">
+                        Developed with 💙
+                        by <a href="#" class="footer__link students--link" data-footer-open="">GoIT Students</a>
+                    </p>
+                </div>
+            </div>
+        </footer>
+        <div id="modalFooter" class="backdrop footer__backdrop is-hidden js-backdrop" data-modal-footer="" style="display:none">
+            <div class="footer-modal"></div>
+        </div>
+    </div>
+    <script src="./script.js"></script>
+</body>
+
+</html>
