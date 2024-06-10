@@ -11,6 +11,7 @@ const loginForm = document.getElementById('login-form');
 const signupBtn = document.getElementById('signup-btn');
 const loginBtn = document.getElementById('login-btn');
 const notification = document.getElementById('notification');
+const bodyWrap=document.getElementById('body-wrapper');
 let loginstatus = false;
 
 function checkLoginStatus() {
@@ -42,11 +43,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     closeBtn.onclick = function() {
         modal.style.display = 'none';
+        bodyWrap.style.overflow="auto";
     };
 
     window.onclick = function(event) {
         if (event.target == modal) {
             modal.style.display = 'none';
+            bodyWrap.style.overflow="auto";
         }
     };
 
@@ -107,6 +110,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         modal.style.display = 'block';
+        bodyWrap.style.overflow="hidden";
     }
 
     function isBookInCart(bookId) {
@@ -116,11 +120,13 @@ document.addEventListener('DOMContentLoaded', function() {
     function addToCart(bookId) {
         console.log(`Adding book ${bookId} to cart`);
         modal.style.display = 'none';
+        bodyWrap.style.overflow="auto";
     }
 
     function removeFromCart(bookId) {
         console.log(`Removing book ${bookId} from cart`);
         modal.style.display = 'none';
+        bodyWrap.style.overflow="auto";
     }
 
 });
@@ -131,17 +137,20 @@ openModalBtn.addEventListener('click', function() {
         logOutBtn.style.display = logOutBtn.style.display === 'block' ? 'none' : 'block';
     } else {
         modal.style.display = 'flex';
+        bodyWrap.style.overflow="hidden";
     }
 });
 
 closeModalBtn.addEventListener('click', function() {
     modal.style.display = 'none';
+    bodyWrap.style.overflow="auto";
     clearInputFields();
 });
 
 window.addEventListener('click', function(event) {
     if (event.target == modal) {
         modal.style.display = 'none';
+        bodyWrap.style.overflow="auto";
     }
 });
 
@@ -268,7 +277,9 @@ async function fetchCategories() {
         const data = await response.json();
         data.forEach(category => {
             const listItem = document.createElement('li');
+            listItem.classList.add('categeory-list-item')
             listItem.textContent = category.list_name;
+            listItem.addEventListener('click', () => fetchBooksByCategory(category.list_name) );
             cat_list.appendChild(listItem);
         });
     } catch (error) {
@@ -282,13 +293,13 @@ const mainTitleElement = document.querySelector('.main-title');
 const bestSellerSpan = mainTitleElement.querySelector('.bestSeller');
 const booksSpan = mainTitleElement.querySelector('.books');
 const backButton = document.getElementById('back-button');
-
+const categorySection = document.createElement('div');
 async function fetchBooks() {
     try {
         const response = await fetch(booksApiUrl);
         const data = await response.json();
         data.forEach(category => {
-            const categorySection = document.createElement('div');
+          
             categorySection.classList.add('category-section');
 
             const categoryTitle = document.createElement('h3');
@@ -396,3 +407,28 @@ backButton.addEventListener('click', () => {
     booksSpan.textContent = 'Books';
     backButton.style.display = 'none';
 });
+
+const allCatgoryHeading=document.getElementById('all-cat-heading');
+allCatgoryHeading.addEventListener('click',()=>{
+    booksContainerElement.innerHTML = '';
+    fetchBooks();
+    bestSellerSpan.textContent = 'Best Sellers';
+    booksSpan.textContent = 'Books';
+});
+
+async function fetchBooksByCategory(categoryName) {
+    try {
+        const categoryApiUrl = `https://books-backend.p.goit.global/books/category?category=${encodeURIComponent(categoryName)}`;
+        const response = await fetch(categoryApiUrl);
+        const data = await response.json();
+        booksContainerElement.innerHTML = '';
+        data.forEach(book => {
+            const bookCard = createBookCard(book);
+            booksContainerElement.appendChild(bookCard);
+        });
+        updateMainTitle(categoryName);
+        backButton.style.display = 'block';
+    } catch (error) {
+        console.error('Error fetching books for category:', error);
+    }
+}
