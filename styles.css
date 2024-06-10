@@ -344,7 +344,18 @@ input[type="password"] {
     height: 100%;
     overflow-y: auto;
 }
-
+.allimage{
+    margin: 1rem;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    gap: 1rem;
+}
+.allimage img{
+    height: 2rem;
+    width: 10rem;
+}
 .main-content {
     flex: 1; 
     padding: 5rem 12rem;
@@ -701,6 +712,17 @@ input[type="password"] {
         flex: 1; 
         padding: 0.5rem 1rem;
     }
+     .checkbox-label .ball {
+        background-color: var(--bg-color);
+        width: 22px;
+        height: 22px;
+        position: absolute;
+        left: 2px;
+        top: 2px;
+        border-radius: 50%;
+        transition: transform 0.2s linear;
+      }
+      
     .modal-content {
         background-color: #fefefe;
         width: 80vw; 
