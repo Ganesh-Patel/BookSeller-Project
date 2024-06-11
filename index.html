@@ -7,7 +7,8 @@
     <title>Book App</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="./styles.css">
-    <link rel="icon" href="https://yevhenii2022.github.io/team-proj-js-book-app/apple-touch-icon.80f5f654.png" type="image/png">
+    <link rel="icon" href="https://yevhenii2022.github.io/team-proj-js-book-app/apple-touch-icon.80f5f654.png"
+        type="image/png">
 </head>
 
 <body>
@@ -15,7 +16,8 @@
         <header class="header">
             <nav class="left-nav">
                 <a href="#" rel="nofollow noopener noreferrer" class="logo">
-                    <img class="logo-svg" width="35" height="35" src="https://yevhenii2022.github.io/team-proj-js-book-app/apple-touch-icon.80f5f654.png">
+                    <img class="logo-svg" width="35" height="35"
+                        src="https://yevhenii2022.github.io/team-proj-js-book-app/apple-touch-icon.80f5f654.png">
                     <h2>Book</h2>
                 </a>
                 <ul class="navigation__list" id="navigation__list">
@@ -27,7 +29,8 @@
                         </a>
                     </li>
                     <li class="navigation__item">
-                        <a href="#" rel="nofollow noopener noreferrer" class="navigation__link navigation__link--with-icon">
+                        <a href="#" rel="nofollow noopener noreferrer"
+                            class="navigation__link navigation__link--with-icon">
                             <span>Shopping list</span>
                             <i class="fa-solid fa-bag-shopping shop-bag"></i>
                         </a>
@@ -50,93 +53,155 @@
                         <span class="sign-up-btn__text">Sign up</span>
                         <i class="fa-solid fa-arrow-right"></i>
                     </button>
-                   
+                </div>
+                <!-- Hamburger menu icon -->
+                <div class="hamburger-menu" id="hamburger-menu">
+                    <i class="fa fa-bars"></i>
                 </div>
             </div>
         </header>
         <main>
-            <button id="log-out-btn" class="log-out-btn" type="button" aria-label="Log out" style="display: none; margin-top: 10px;">
+            <button id="log-out-btn" class="log-out-btn" type="button" aria-label="Log out"
+                style="display: none; margin-top: 10px;">
                 <span class="sign-up-btn__text">Log out</span>
                 <i class="fa-solid fa-arrow-right"></i>
             </button>
-            <div id="authModal" class="modal" style="display: none;">
-                <div class="modal-content">
-                    <span class="close-btn">&times;</span>
-                    <div id="signup-form">
-                        <h2>Sign Up</h2>
-                        <input type="text" id="signup-username" placeholder="Username" required>
-                        <input type="email" id="signup-email" placeholder="Email" required>
-                        <input type="password" id="signup-password" placeholder="Password" required>
-                        <button id="signup-btn">Sign Up</button>
-                    </div>
-                    <div id="login-form" style="display: none;">
-                        <h2>Log In</h2>
-                        <input type="email" id="login-email" placeholder="Email" required>
-                        <input type="password" id="login-password" placeholder="Password" required>
-                        <button id="login-btn">Log In</button>
-                    </div>
-                    <div class="modal-footer">
-                        <span id="switch-to-login">Already have an account? Log In</span>
-                        <span id="switch-to-signup" style="display: none;">Don't have an account? Sign Up</span>
-                    </div>
+        </main>
+
+        <!-- Hamburger menu dropdown -->
+        <div class="mobile-nav" id="mobile-nav">
+            <ul class="mobile-navigation__list">
+                <span class="close-btn-mob">&times;</span>
+                <li class="mobile-navigation__item">
+                    <a href="#" rel="nofollow noopener noreferrer" class="navigation__link home-nevigation">
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li class="mobile-navigation__item">
+                    <a href="#" rel="nofollow noopener noreferrer" class="navigation__link navigation__link--with-icon">
+                        <span>Shopping list</span>
+                        <i class="fa-solid fa-bag-shopping shop-bag"></i>
+                    </a>
+                </li>
+                <li class="mobile-navigation__item">
+                    <span id="mobile-sign-up-btn" class="sign-up-btn__text">Sign up</span>
+                </li>
+                <li class="mobile-navigation__item">
+                    <span id="mobile-log-out-btn" class="sign-up-btn__text">Log out</span>
+                </li>
+            </ul>
+        </div>
+        <div id="loader" class="loader" style="display: none;"></div>
+
+        <div id="authModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <span class="close-btn">&times;</span>
+                <div id="signup-form">
+                    <h2>Sign Up</h2>
+                    <input type="text" id="signup-username" placeholder="Username" required>
+                    <input type="email" id="signup-email" placeholder="Email" required>
+                    <input type="password" id="signup-password" placeholder="Password" required>
+                    <button id="signup-btn">Sign Up</button>
                 </div>
-                <div id="notification" class="notification"></div>
+                <div id="login-form" style="display: none;">
+                    <h2>Log In</h2>
+                    <input type="email" id="login-email" placeholder="Email" required>
+                    <input type="password" id="login-password" placeholder="Password" required>
+                    <button id="login-btn">Log In</button>
+                </div>
+                <div class="modal-footer">
+                    <span id="switch-to-login">Already have an account? Log In</span>
+                    <span id="switch-to-signup" style="display: none;">Don't have an account? Sign Up</span>
+                </div>
             </div>
-            <div class="main-section">
-                <div class="left-sidebar">
-                    <div class="sidebar-menu">
-                     
-                        <ul class="menu-list" id="menu-list">
-                            <h1 class="all-cat-heading" id="all-cat-heading">All categories</h1>
-                            <!-- Your menu items go here -->
-                           
-                        </ul>
-                    </div>
-                    <div class="support-container">
-                        <!-- Support content goes here -->
-                        <div class="support-content">
-                            <h2>Support Container</h2>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            <!-- Additional support content -->
-                            <div class="allimage">
-                               <a href="#"> <img src="./images/01-found-2.60510847.png" alt=""></a>
-                               <a href="#"><img src="./images/02-found-2.ca1470b9.png" alt=""></a>
-                                <a href="#"> <img src="./images/03-found-2.120110b5.png" alt=""></a>
-                                <a href="#"> <img src="./images/04-found-2.eb46b36a.png" alt=""></a>
-                                <a href="#"> <img src="./images/05-found-2.0f9c49b7.png" alt=""></a>
-                               <a href="#"> <img src="./images/06-found-2.f28ed76b.png" alt=""></a>
-                                <a href="#"> <img src="./images/07-found-2.ee2ee4c4.png" alt=""></a>
-                                <a href="#"><img src="./images/08-found-2.16ff1d18.png" alt=""></a>
-                                <a href="#"><img src="./images/09-found-2.7545e455.png" alt=""></a>
-                            </div>
+            <div id="notification" class="notification"></div>
+        </div>
+        <div class="main-section" id="main-section">
+            <div class="left-sidebar">
+                <div class="sidebar-menu">
+
+                    <ul class="menu-list" id="menu-list">
+                        <h1 class="all-cat-heading" id="all-cat-heading">All categories</h1>
+                        <!-- Your menu items go here -->
+
+                    </ul>
+                </div>
+                <div class="support-container">
+                    <!-- Support content goes here -->
+                    <div class="support-content">
+                        <div class="support-title">
+                            <h2>Support Ukraine </h2>
+                            <img
+                                src="https://www.uavets.org/wp-content/uploads/tryzub-siler-white-uav-2022-10-10-324x536.png">
+                        </div> <!-- Additional support content -->
+                        <div class="allimage">
+                            <a href="#"> <img src="./images/01-found-2.60510847.png" alt=""></a>
+                            <a href="#"><img src="./images/02-found-2.ca1470b9.png" alt=""></a>
+                            <a href="#"> <img src="./images/03-found-2.120110b5.png" alt=""></a>
+                            <a href="#"> <img src="./images/04-found-2.eb46b36a.png" alt=""></a>
+                            <a href="#"> <img src="./images/05-found-2.0f9c49b7.png" alt=""></a>
+                            <a href="#"> <img src="./images/06-found-2.f28ed76b.png" alt=""></a>
+                            <a href="#"> <img src="./images/07-found-2.ee2ee4c4.png" alt=""></a>
+                            <a href="#"><img src="./images/08-found-2.16ff1d18.png" alt=""></a>
+                            <a href="#"><img src="./images/09-found-2.7545e455.png" alt=""></a>
                         </div>
                     </div>
                 </div>
-                <!-- Main content of the page -->
-                <div class="main-content">
-                    <p class="main-title"><span class="bestSeller">Best Sellers</span> <span class="books">Books</span></p>
-                   
-                    <div id="books-container">
-                        <!-- Books will be populated here by JavaScript -->
-                    </div>
-                    <button id="back-button" class="back-button" style="display: none;">Back</button>
-                </div>
             </div>
+            <!-- Main content of the page -->
+            <div class="main-content">
+                <p class="main-title"><span class="bestSeller">Best Sellers</span> <span class="books">Books</span></p>
 
-            <!-- Book Modal Structure -->
-            <div id="bookModal" class="book-modal">
-                <div class="book-modal-content">
-                    <span class="book-close-btn">&times;</span>
-                    <img id="modalBookImage" src="" alt="Book Image">
-                    <h2 id="modalBookTitle"></h2>
-                    <p id="modalBookAuthor"></p>
-                    <p id="modalBookDescription"></p>
-                    <div id="buyLinks"></div>
-                    <button id="modalActionButton"></button>
+                <div id="books-container">
+                    <!-- Books will be populated here by JavaScript -->
                 </div>
+                <button id="back-button" class="back-button" style="display: none;">Back</button>
             </div>
-            
-            
+        </div>
+
+        <!-- Book Modal Structure -->
+        <div id="bookModal" class="book-modal">
+            <div class="book-modal-content">
+                <span class="book-close-btn">&times;</span>
+                <img id="modalBookImage" src="" alt="Book Image">
+                <h2 id="modalBookTitle"></h2>
+                <p id="modalBookAuthor"></p>
+                <p id="modalBookDescription"></p>
+                <div id="buyLinks"></div>
+                <button id="modalActionButton"></button>
+            </div>
+        </div>
+        <div id="modalFooter" class="backdrop footer__backdrop is-hidden js-backdrop" data-modal-footer="">
+            <div class="footer-modal">
+                <button id="closeModalBtn" class="close-modal">&times;</button>
+                <div class="glide__track" data-glide-el="track">
+                    <li class="glide__slide" style="width: 300px; margin-left: 5px; margin-right: 5px;">
+                        <div class="border__outside">
+                            <div class="border__inside">
+                                <img class="student-foto" src="./images/gg.jpg" alt="Team Lead" height="100" width="100"
+                                    style="border-radius: 50%;">
+                            </div>
+                        </div>
+                        <div class="student__card">
+                            <h3 class="student__name">Ganesh</h3>
+                            <p class="student__role">Developer</p>
+                            <ul class="footer__social">
+                                <a class="student__link" href="https://github.com/" target="_blank"
+                                    rel="noopener noreferrer" aria-label="Github">
+                                    <svg height="32" aria-hidden="true" viewBox="0 0 16 16" version="1.1" width="32"
+                                        data-view-component="true" class="octicon octicon-mark-github v-align-middle">
+                                        <path
+                                            d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z">
+                                        </path>
+                                    </svg>
+                                </a>
+                            </ul>
+                        </div>
+                    </li>
+                </div>
+
+            </div>
+        </div>
         </main>
         <footer class="footer">
             <div class="container">
@@ -144,14 +209,13 @@
                     <p class="footer__text footer__text--left">&#169;2023 | All Rights Reserved | </p>
                     <p class="footer__text footer__text--rigth">
                         Developed with 💙
-                        by <a href="#" class="footer__link students--link" data-footer-open="">Geekster Student</a>
+                        by <a class="footer__link students--link" data-footer-open="">Geekster <span
+                                id="Developer-reference" style="">Student</span></a>
                     </p>
                 </div>
             </div>
         </footer>
-        <div id="modalFooter" class="backdrop footer__backdrop is-hidden js-backdrop" data-modal-footer="" style="display:none">
-            <div class="footer-modal"></div>
-        </div>
+
     </div>
     <script src="./script.js"></script>
 </body>
