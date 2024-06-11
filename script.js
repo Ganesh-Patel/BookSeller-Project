@@ -1,9 +1,10 @@
 const homelist = document.getElementById('navigation__list');
 const signUpBtn = document.getElementById("sign-up-btn");
 const logOutBtn = document.getElementById("log-out-btn");
-const modal = document.getElementById('authModal');
+const modalAuth = document.getElementById('authModal');
 const openModalBtn = document.getElementById('sign-up-btn');
 const closeModalBtn = document.querySelector('.close-btn');
+const closedmodbtnmobile = document.querySelector('.close-btn-mob');
 const switchToLogin = document.getElementById('switch-to-login');
 const switchToSignup = document.getElementById('switch-to-signup');
 const signupForm = document.getElementById('signup-form');
@@ -11,12 +12,14 @@ const loginForm = document.getElementById('login-form');
 const signupBtn = document.getElementById('signup-btn');
 const loginBtn = document.getElementById('login-btn');
 const notification = document.getElementById('notification');
-const bodyWrap=document.getElementById('body-wrapper');
+const bodyWrap = document.getElementById('body-wrapper');
+const hamburgerMenu = document.getElementById('hamburger-menu');
+const mobileNav = document.getElementById('mobile-nav');
+const devRef = document.getElementById('Developer-reference');
 let loginstatus = false;
-
 function checkLoginStatus() {
     const currentUser = localStorage.getItem('currentUser');
-    loginstatus = !!currentUser; 
+    loginstatus = !!currentUser;
     if (loginstatus) {
         displayUsername(currentUser);
         homelist.style.display = 'flex';
@@ -26,12 +29,72 @@ function checkLoginStatus() {
         logOutBtn.style.display = 'none';
     }
 }
+devRef.addEventListener('click', () => {
+    const footerModal = document.getElementById('modalFooter');
+    footerModal.style.display = "block";
+})
 
+document.getElementById('closeModalBtn').addEventListener('click', function () {
+    document.getElementById('modalFooter').style.display = 'none';
+});
 // Initial check for login status when the page loads
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     checkLoginStatus();
     fetchCategories();
     fetchBooks();
+    const header = document.querySelector('.header');
+
+    hamburgerMenu.addEventListener('click', () => {
+        mobileNav.style.display = "block";
+    });
+
+    // Optional: Close the menu when clicking outside
+    document.addEventListener('click', (event) => {
+        if (!header.contains(event.target) && header.classList.contains('active')) {
+            header.classList.remove('active');
+        }
+    });
+
+    const mobileSignUpBtn = document.getElementById('mobile-sign-up-btn');
+    const mobileLogOutBtn = document.getElementById('mobile-log-out-btn');
+
+    mobileSignUpBtn.addEventListener('click', () => {
+        if (loginstatus) {
+            // Toggle the display of the logout button
+            mobileLogOutBtn.style.display = logOutBtn.style.display === 'block' ? 'none' : 'block';
+        } else {
+            modalAuth.style.display = 'flex';
+            bodyWrap.style.overflow = "hidden";
+            mobileNav.style.display = "none";
+        }
+    });
+
+    mobileLogOutBtn.addEventListener('click', () => {
+        console.log("log out clicked ");
+        localStorage.removeItem('currentUser');
+        mobileNav.style.display = "none";
+        showNotification('Logged out successfully!', 'success');
+        logOutBtn.style.display = 'none';
+        homelist.style.display = 'none';
+        loginstatus = false;
+
+    });
+
+    closedmodbtnmobile.addEventListener('click', function () {
+        console.log("modalauth closed ");
+        mobileNav.style.display = "none";
+        bodyWrap.style.overflow = "auto";
+        clearInputFields();
+    });
+
+    function showLoader() {
+        document.getElementById('loader').style.display = 'block';
+    }
+
+    function hideLoader() {
+        document.getElementById('loader').style.display = 'none';
+    }
+
     const modal = document.getElementById('bookModal');
     const closeBtn = document.querySelector('.book-close-btn');
     const modalBookImage = document.getElementById('modalBookImage');
@@ -41,19 +104,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const buyLinksContainer = document.getElementById('buyLinks');
     const modalActionButton = document.getElementById('modalActionButton');
 
-    closeBtn.onclick = function() {
+    closeBtn.onclick = function () {
         modal.style.display = 'none';
-        bodyWrap.style.overflow="auto";
+        bodyWrap.style.overflow = "auto";
     };
 
-    window.onclick = function(event) {
+    window.onclick = function (event) {
         if (event.target == modal) {
             modal.style.display = 'none';
-            bodyWrap.style.overflow="auto";
+            bodyWrap.style.overflow = "auto";
         }
     };
 
-    document.addEventListener('click', function(event) {
+    document.addEventListener('click', function (event) {
         if (event.target.classList.contains('quick-review-btn')) {
             const bookId = event.target.dataset.bookId;
             if (bookId) {
@@ -81,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         // Clear previous buy links
         buyLinksContainer.innerHTML = '';
-        
+
         // Use predefined images for buy links
         const predefinedLinks = [
             { name: 'Amazon', imgSrc: 'https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-1x.d33dc585.png', imgSrcSet: 'https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-1x.d33dc585.png 1x, https://yevhenii2022.github.io/team-proj-js-book-app/amazon-shop-2x.01f59d3f.png 2x', alt: 'amazon' },
@@ -110,7 +173,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         modal.style.display = 'block';
-        bodyWrap.style.overflow="hidden";
+        bodyWrap.style.overflow = "hidden";
     }
 
     function isBookInCart(bookId) {
@@ -120,55 +183,57 @@ document.addEventListener('DOMContentLoaded', function() {
     function addToCart(bookId) {
         console.log(`Adding book ${bookId} to cart`);
         modal.style.display = 'none';
-        bodyWrap.style.overflow="auto";
+        bodyWrap.style.overflow = "auto";
     }
 
     function removeFromCart(bookId) {
         console.log(`Removing book ${bookId} from cart`);
         modal.style.display = 'none';
-        bodyWrap.style.overflow="auto";
+        bodyWrap.style.overflow = "auto";
     }
 
 });
 
-openModalBtn.addEventListener('click', function() {
+openModalBtn.addEventListener('click', function () {
     if (loginstatus) {
         // Toggle the display of the logout button
         logOutBtn.style.display = logOutBtn.style.display === 'block' ? 'none' : 'block';
     } else {
-        modal.style.display = 'flex';
-        bodyWrap.style.overflow="hidden";
+        modalAuth.style.display = 'flex';
+        bodyWrap.style.overflow = "hidden";
     }
 });
 
-closeModalBtn.addEventListener('click', function() {
-    modal.style.display = 'none';
-    bodyWrap.style.overflow="auto";
+closeModalBtn.addEventListener('click', function () {
+    console.log("modalauth closed ");
+    modalAuth.style.display = 'none';
+    mobileNav.style.display = "none";
+    bodyWrap.style.overflow = "auto";
     clearInputFields();
 });
 
-window.addEventListener('click', function(event) {
-    if (event.target == modal) {
-        modal.style.display = 'none';
-        bodyWrap.style.overflow="auto";
+window.addEventListener('click', function (event) {
+    if (event.target == modalAuth) {
+        modalAuth.style.display = 'none';
+        bodyWrap.style.overflow = "auto";
     }
 });
 
-switchToLogin.addEventListener('click', function() {
+switchToLogin.addEventListener('click', function () {
     signupForm.style.display = 'none';
     loginForm.style.display = 'block';
     switchToLogin.style.display = 'none';
     switchToSignup.style.display = 'block';
 });
 
-switchToSignup.addEventListener('click', function() {
+switchToSignup.addEventListener('click', function () {
     signupForm.style.display = 'block';
     loginForm.style.display = 'none';
     switchToLogin.style.display = 'block';
     switchToSignup.style.display = 'none';
 });
 
-signupBtn.addEventListener('click', function() {
+signupBtn.addEventListener('click', function () {
     const username = document.getElementById('signup-username').value;
     const email = document.getElementById('signup-email').value;
     const password = document.getElementById('signup-password').value;
@@ -194,7 +259,7 @@ signupBtn.addEventListener('click', function() {
     switchToLogin.click();
 });
 
-loginBtn.addEventListener('click', function() {
+loginBtn.addEventListener('click', function () {
     const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
@@ -217,11 +282,11 @@ loginBtn.addEventListener('click', function() {
     homelist.style.display = 'flex';
     clearInputFields();
 
-    modal.style.display = 'none';
+    modalAuth.style.display = 'none';
     displayUsername(user.username);
 });
 
-logOutBtn.addEventListener('click', function() {
+logOutBtn.addEventListener('click', function () {
     localStorage.removeItem('currentUser');
     showNotification('Logged out successfully!', 'success');
     logOutBtn.style.display = 'none'; // Hide logout button on logout
@@ -268,7 +333,7 @@ checkbox.addEventListener("change", () => {
     body.setAttribute('data-theme', newTheme);
 });
 
-const cat_list=document.getElementById("menu-list");
+const cat_list = document.getElementById("menu-list");
 const apiUrl = 'https://books-backend.p.goit.global/books/category-list';
 
 async function fetchCategories() {
@@ -279,7 +344,7 @@ async function fetchCategories() {
             const listItem = document.createElement('li');
             listItem.classList.add('categeory-list-item')
             listItem.textContent = category.list_name;
-            listItem.addEventListener('click', () => fetchBooksByCategory(category.list_name) );
+            listItem.addEventListener('click', () => fetchBooksByCategory(category.list_name));
             cat_list.appendChild(listItem);
         });
     } catch (error) {
@@ -299,7 +364,7 @@ async function fetchBooks() {
         const response = await fetch(booksApiUrl);
         const data = await response.json();
         data.forEach(category => {
-          
+
             categorySection.classList.add('category-section');
 
             const categoryTitle = document.createElement('h3');
@@ -408,8 +473,8 @@ backButton.addEventListener('click', () => {
     backButton.style.display = 'none';
 });
 
-const allCatgoryHeading=document.getElementById('all-cat-heading');
-allCatgoryHeading.addEventListener('click',()=>{
+const allCatgoryHeading = document.getElementById('all-cat-heading');
+allCatgoryHeading.addEventListener('click', () => {
     booksContainerElement.innerHTML = '';
     fetchBooks();
     bestSellerSpan.textContent = 'Best Sellers';
